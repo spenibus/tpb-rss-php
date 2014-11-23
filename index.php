@@ -2,7 +2,7 @@
 /*******************************************************************************
 TPB-RSS
 creation: 2014-11-22 10:16 +0000
-  update: 2014-11-23 21:59 +0000
+  update: 2014-11-23 23:13 +0000
 
 usage:
    ?path=/search/cat
@@ -21,10 +21,11 @@ error_reporting(!E_ALL);
 /******************************************************************************/
 date_default_timezone_set('Europe/Stockholm');
 
-$CFG_DIR_CACHE     = 'cache/';
-$CFG_TIME          = time();
-$CFG_URL_TPB       = 'https://thepiratebay.se';
-$CFG_CACHE_AGE_MAX = 300;
+$CFG_DIR_CACHE            = 'cache/';
+$CFG_TIME                 = time();
+$CFG_URL_TPB              = 'https://thepiratebay.se';
+$CFG_CACHE_AGE_MAX        = 300;
+$CFG_CACHE_VACUUM_AGE_MAX = 86400;
 
 
 
@@ -49,12 +50,12 @@ function returnFeed($str) {
 /******************************************************************************/
 function vacuumCache() {
 
-   global $CFG_DIR_CACHE, $CFG_TIME;
+   global $CFG_DIR_CACHE, $CFG_TIME, $CFG_CACHE_VACUUM_AGE_MAX;
 
    $vacuumFile = $CFG_DIR_CACHE.'_vacuum';
 
    // never vacuumed or last vacuum > 24hours
-   $vacuum = !is_file($vacuumFile) || $CFG_TIME-filemtime($vacuumFile) > 86400
+   $vacuum = !is_file($vacuumFile) || $CFG_TIME-filemtime($vacuumFile) > $CFG_CACHE_VACUUM_AGE_MAX
       ? true
       : false;
 
@@ -75,7 +76,7 @@ function vacuumCache() {
          $fa = $CFG_TIME - $f->getMTime();
 
          // file is old (24 hours), delete
-         if($fa > 86400) {
+         if($fa > $CFG_CACHE_VACUUM_AGE_MAX) {
             unlink($fp);
          }
       }
@@ -157,7 +158,7 @@ if($_GET['path']) {
 
 
    // cache data
-   $cacheFile = $CFG_DIR_CACHE.'cache-'.sha1($path);
+   $cacheFile = $CFG_DIR_CACHE.'cache-'.sha1($path).'.xml';
    $cacheAge  = $CFG_TIME - filemtime($cacheFile);
 
 

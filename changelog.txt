@@ -1,0 +1,7 @@
+2014-11-23 23:13 +0000
+   - added xml extension to cache files
+   - added config var for cache vacuum time check
+   - added changelog
+
+2014-11-23 21:59 +0000
+   - initial commit
