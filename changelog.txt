@@ -1,3 +1,6 @@
+2014-11-26 08:10 +0000
+   - added default character encoding (utf-8)
+
 2014-11-23 23:13 +0000
    - added xml extension to cache files
    - added config var for cache vacuum time check
