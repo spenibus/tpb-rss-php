@@ -1,3 +1,9 @@
+2014-12-02 14:06 +0000
+   - added key protection
+   - updated readme
+   - added folder: cache
+   - added folder: config
+
 2014-11-26 08:29 +0000
    - changed default page text
 

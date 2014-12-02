@@ -2,7 +2,7 @@
 /*******************************************************************************
 TPB-RSS
 creation: 2014-11-22 10:16 +0000
-  update: 2014-11-26 08:29 +0000
+  update: 2014-12-02 14:06 +0000
 
 usage:
    ?path=/search/cat
@@ -12,7 +12,7 @@ usage:
 
 
 /******************************************************************************/
-error_reporting(!E_ALL);
+error_reporting(0);
 //error_reporting(E_WARNING);
 mb_internal_encoding('UTF-8');
 
@@ -22,7 +22,8 @@ mb_internal_encoding('UTF-8');
 /******************************************************************************/
 date_default_timezone_set('Europe/Stockholm');
 
-$CFG_DIR_CACHE            = 'cache/';
+$CFG_DIR_CACHE            = './cache/';
+$CFG_DIR_CONFIG           = './config/';
 $CFG_TIME                 = time();
 $CFG_URL_TPB              = 'https://thepiratebay.se';
 $CFG_CACHE_AGE_MAX        = 300;
@@ -137,15 +138,7 @@ function timeExtractor($str) {
 
 
 
-/**************************************************************** pre-process */
-
-// check cache dir
-if(!is_dir($CFG_DIR_CACHE)) {
-   mkdir($CFG_DIR_CACHE, 0777, true);
-}
-
-
-// vacuum cache
+/*************************************************************** vacuum cache */
 vacuumCache();
 
 
@@ -156,6 +149,20 @@ if($_GET['path']) {
 
    // tpb path
    $path = $_GET['path'];
+
+
+   // key
+   $key = $_GET['key'];
+
+
+   // check for key (password)
+   $fileKey = $CFG_DIR_CONFIG.'key.txt';
+   if(is_file($fileKey)) {
+      $cfgKey = file_get_contents($fileKey);
+      if($key != $cfgKey) {
+         exit('key is invalid');
+      }
+   }
 
 
    // cache data
