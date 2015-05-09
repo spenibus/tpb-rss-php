@@ -1,3 +1,7 @@
+tpb-rss
+http://spenibus.net
+
+
 An RSS feed generator for the pirate bay.
 It should work for both browsing and searching.
 Pages are cached for 300 seconds.
