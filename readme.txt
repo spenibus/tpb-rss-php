@@ -1,5 +1,7 @@
 tpb-rss
 http://spenibus.net
+https://github.com/spenibus/tpb-rss-php
+https://gitlab.com/spenibus/tpb-rss-php
 
 
 An RSS feed generator for the pirate bay.
